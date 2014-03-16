@@ -1,0 +1,48 @@
+﻿<Window x:Class="ControllsMVVM.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+         <!--<ListBox ItemsSource="{Binding AllPersons}"  IsSynchronizedWithCurrentItem="True"  Height="187" Margin="28,20,0,0" Name="ListPersons" Width="243" >-->
+        <ListBox   SelectedIndex="{Binding ValueAfterRemoval}" IsSynchronizedWithCurrentItem="True"  Height="187" Margin="206,72,30,64" Name="ListPersons">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <DockPanel Name="mydoc" HorizontalAlignment="Left" >
+                      <TabControl  >
+                            <TabItem  Header="First Name" Name="Name" Width="110">
+                                <Grid >
+                                    <TextBlock Text="{Binding Path=FirstName}" FontWeight="Bold" FontFamily="Verdana" FontSize="14"  />
+                                </Grid>
+                            </TabItem>
+                            <TabItem  Header="Last Name" Name="Lastname" Width="110">
+                                <Grid >
+                                    <TextBlock Text="{Binding Path=LastName}" FontWeight="Bold" FontFamily="Verdana" FontSize="14"  />
+                                </Grid>
+                            </TabItem>                          
+                       
+                     </TabControl>
+                    </DockPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Button Content="Remove Selected Item" Command="{Binding RemoveCommand}" CommandParameter="{Binding ElementName=ListPersons, Path=SelectedItem}" Margin="303,10,73,266" Name="btnremove">
+            <Button.Style>
+                <Style>
+                    <Style.Triggers>
+                        <DataTrigger  
+                     Binding ="{Binding ElementName=ListPersons, Path=SelectedIndex}"  
+                     Value="-1">
+                            <Setter Property="Button.IsEnabled" Value="false"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
+        <Button  Content="Add Item" Command="{Binding  AddCommand}"   HorizontalAlignment="Left" Margin="63,33,0,0" VerticalAlignment="Top" Width="111" Height="38" Name="btnadd" Click="btnadd_Click">
+        </Button>
+        <StackPanel  Name="stackcontainer"   HorizontalAlignment="Left" Height="42" Margin="26,115,0,0" VerticalAlignment="Top" Width="175">
+            <TextBox x:Name="txtfirstname" TextWrapping="Wrap" Text="{Binding Path=FirstName}"  VerticalAlignment="Top" Width="120" />
+            <TextBox x:Name="txtlastname" TextWrapping="Wrap" Text="{Binding Path=LastName}" VerticalAlignment="Top" Width="120"/>
+        </StackPanel>
+    </Grid>
+</Window>
